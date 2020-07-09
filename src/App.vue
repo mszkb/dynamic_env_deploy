@@ -1,28 +1,26 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{ string1 }}<br />
+    {{ string2 }}<br />
+    {{ string3 }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    string1 () {
+      return this.$c("VUE_APP_EXPOSED_1", "I am the custom fallback");
+    },
+    string2 () {
+      return this.$c("VUE_APP_EXPOSED_2", process.env.VUE_APP_EXPOSED_2);
+    },
+    string3 () {
+      return process.env.VUE_APP_HARD_1
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

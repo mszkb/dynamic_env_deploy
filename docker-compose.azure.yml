@@ -1,0 +1,13 @@
+version: "3"
+services:
+  frontend:
+    container_name: dynamic_vars
+    build:
+      context: .
+      args:
+        - VUE_APP_HARD_1=1 I am hardcoded inside the code
+        - VUE_APP_HARD_2=2 I am hardcoded inside the code
+    environment:
+      - VUE_APP_EXPOSED_1=${VAR_1}
+    ports:
+      - "80:80"
