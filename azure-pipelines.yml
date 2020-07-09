@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Visual Studio Enterprise(c564beba-eb27-4904-8e43-f4fbdd123731)'
+    azureContainerRegistry: '{"loginServer":"taxtechregistry.azurecr.io", "id" : "/subscriptions/c564beba-eb27-4904-8e43-f4fbdd123731/resourceGroups/taxtech/providers/Microsoft.ContainerRegistry/registries/taxtechRegistry"}'
+    dockerComposeFile: '**/docker-compose.azure.yml'
+    dockerComposeFileArgs: 'VAR_1=$(VAR_1)'
+    action: 'Build services'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Visual Studio Enterprise(c564beba-eb27-4904-8e43-f4fbdd123731)'
+    azureContainerRegistry: '{"loginServer":"taxtechregistry.azurecr.io", "id" : "/subscriptions/c564beba-eb27-4904-8e43-f4fbdd123731/resourceGroups/taxtech/providers/Microsoft.ContainerRegistry/registries/taxtechRegistry"}'
+    dockerComposeFile: '**/docker-compose.azure.yml'
+    action: 'Push services'
